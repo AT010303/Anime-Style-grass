@@ -3,7 +3,6 @@ import { Canvas } from '@react-three/fiber';
 import { Perf } from 'r3f-perf';
 
 import GrassBlades from './grassBlades.jsx';
-import GrassFeild from './grassFeild.jsx';
 
 const Experience = () => {
     return (
@@ -11,8 +10,9 @@ const Experience = () => {
             <Canvas camera={{ position: [0, 1, 8] }}>
                 <Perf position={'top-left'} />
                 <CameraControls />
+                <ambientLight intensity={0.5} />
+                <directionalLight position={[5, 10, 0]} intensity={0.5} />
                 <GrassBlades />
-                <GrassFeild />
             </Canvas>
         </>
     );
