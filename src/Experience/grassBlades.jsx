@@ -31,7 +31,7 @@ const GrassBlades = () => {
             const direction = new THREE.Vector3();
             direction.subVectors(camera.position, dummy.position).normalize();
             const angleY = Math.atan2(direction.x, direction.z);
-            dummy.rotation.set(0, angleY , 0); // Set rotation only on Y-axis
+            dummy.rotation.set(0, angleY, 0); // Set rotation only on Y-axis
 
             dummy.updateMatrix();
             instancedMesh.setMatrixAt(i, dummy.matrix); // Update the instance matrix

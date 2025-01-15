@@ -4,7 +4,6 @@ import { Perf } from 'r3f-perf';
 
 import GrassBlades from './grassBlades.jsx';
 
-
 const Experience = () => {
     return (
         <>
