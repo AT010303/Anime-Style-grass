@@ -4,10 +4,11 @@ import { Perf } from 'r3f-perf';
 
 import GrassBlades from './grassBlades.jsx';
 
+
 const Experience = () => {
     return (
         <>
-            <Canvas camera={{ position: [0, 1, 8] }}>
+            <Canvas camera={{ position: [0, 1, 35] }}>
                 <Perf position={'top-left'} />
                 <CameraControls />
                 <ambientLight intensity={0.5} />
