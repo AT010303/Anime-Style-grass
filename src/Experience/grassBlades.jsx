@@ -29,7 +29,7 @@ const GrassBlades = () => {
             }
         },
         baseColor: {
-            value: '#0e4800',
+            value: '#072100',
             label: 'Base color',
             onChange: (color) => {
                 matRef.current.uniforms.uBaseColor.value = new THREE.Color(
