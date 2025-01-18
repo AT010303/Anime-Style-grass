@@ -7,11 +7,9 @@ import GrassBlades from './grassBlades.jsx';
 const Experience = () => {
     return (
         <>
-            <Canvas camera={{ position: [0, 1, 35] }}>
+            <Canvas camera={{ position: [0, 2, 35] }}>
                 <Perf position={'top-left'} />
-                <CameraControls />
-                <ambientLight intensity={0.5} />
-                <directionalLight position={[5, 10, 0]} intensity={0.5} />
+                <CameraControls />                
                 <GrassBlades />
             </Canvas>
         </>

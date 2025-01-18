@@ -4,19 +4,27 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { useMemo, useRef } from 'react';
 import { createNoise3D } from 'simplex-noise';
 import * as THREE from 'three';
+import CustomShaderMaterial from 'three-custom-shader-material';
+
+import grassBladeFragmentShader from './shader/grassBlade/fragment.glsl';
+import grassBladeVertexShader from './shader/grassBlade/vertex.glsl';
 
 const GrassBlades = () => {
-    const grassBlades = useGLTF('/grassBladeHLD.glb'); // Load grass blades model
+    const grassBlades = useGLTF('/grassBlade3.glb'); // Load grass blades model
     const land = useGLTF('/land.glb');
     const instancedMeshRef = useRef();
     const landRef = useRef();
 
     const noise = useMemo(() => createNoise3D(Math.random), []);
-    const count = 5000; // Number of grass blades
+    const count = 30000; // Number of grass blades
 
     const { camera } = useThree();
 
-    // Use frame loop to update grass blades' orientation
+    // Convert land geometry to non-indexed
+    const landGeometry = useMemo(() => {
+        return land.nodes.land.geometry.toNonIndexed();
+    }, [land.nodes.land.geometry]);
+
     useFrame(() => {
         if (!instancedMeshRef.current) return;
 
@@ -46,37 +54,38 @@ const GrassBlades = () => {
                 ref={landRef}
                 receiveShadow
                 castShadow
-                geometry={land.nodes.land.geometry}
+                geometry={landGeometry} // Use non-indexed geometry
             >
-                <meshStandardMaterial color="green" side={THREE.DoubleSide} />
+                <meshBasicMaterial color="green" side={THREE.DoubleSide} />
             </mesh>
-            <>
-                <Sampler
-                    weight="density"
-                    count={count}
-                    transform={({ position, normal, dummy: object }) => {
-                        object.rotation.set(0, Math.random() * Math.PI * 2, 0);
-                        object.position.copy(position);
-                        return object;
-                    }}
-                    mesh={landRef}
+            <Sampler
+                weight="density"
+                count={count}
+                transform={({ position, normal, dummy: object }) => {
+                    object.rotation.set(0, Math.random() * Math.PI * 2, 0);
+                    object.scale.setY(Math.random() * 0.25 + 0.75);
+                    object.position.copy(position);
+                    return object;
+                }}
+                mesh={landRef}
+            >
+                <instancedMesh
+                    ref={instancedMeshRef}
+                    receiveShadow
+                    args={[
+                        grassBlades.nodes.grassBlade.geometry,
+                        null,
+                        count
+                    ]}
                 >
-                    <instancedMesh
-                        ref={instancedMeshRef}
-                        receiveShadow
-                        args={[
-                            grassBlades.nodes.grassBlade.geometry,
-                            null,
-                            count
-                        ]}
-                    >
-                        <meshStandardMaterial
-                            color="lightgreen"
-                            side={THREE.DoubleSide}
-                        />
-                    </instancedMesh>
-                </Sampler>
-            </>
+                    <CustomShaderMaterial
+                        baseMaterial={THREE.MeshBasicMaterial}
+                        fragmentShader={grassBladeFragmentShader}
+                        vertexShader={grassBladeVertexShader}
+                        side={THREE.DoubleSide}
+                    />
+                </instancedMesh>
+            </Sampler>
         </group>
     );
 };
