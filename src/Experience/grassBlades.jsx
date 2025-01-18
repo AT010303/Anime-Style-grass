@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { Sampler, useGLTF } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
+import { useControls } from 'leva';
 import perlin from 'perlin.js';
 import { useMemo, useRef } from 'react';
 import { createNoise3D } from 'simplex-noise';
@@ -15,18 +16,45 @@ const GrassBlades = () => {
     const land = useGLTF('/land.glb');
     const instancedMeshRef = useRef();
     const landRef = useRef();
-    const noise = useMemo(() => createNoise3D(Math.random), []);
-    const count = 30000; // Number of grass blades
+    const matRef = useRef();
+
+    const controls = useControls({
+        tipColor: {
+            value: '#94bf02',
+            label: 'Tip Color',
+            onChange: (color) => {
+                matRef.current.uniforms.uTipColor.value = new THREE.Color(
+                    color
+                ).convertLinearToSRGB();
+            }
+        },
+        baseColor: {
+            value: '#0e4800',
+            label: 'Base color',
+            onChange: (color) => {
+                matRef.current.uniforms.uBaseColor.value = new THREE.Color(
+                    color
+                ).convertLinearToSRGB();
+            }
+        },
+        density: { value: 1, min: 0, max: 4, step: 0.1 }
+    });
+
+    const count = 30000 * controls.density; // Number of grass blades
 
     const { camera } = useThree();
     // console.log('camera', camera);
-    
 
     // Convert land geometry to non-indexed
     const landGeometry = useMemo(() => {
         return land.nodes.land.geometry.toNonIndexed();
     }, [land.nodes.land.geometry]);
 
+    useFrame(({ clock }) => {
+        if (matRef.current) {
+            matRef.current.uniforms.uTime.value = clock.elapsedTime;
+        }
+    });
 
     // need to find better way to update grass blade rotation
     // this works but breaks every other transformation we apply on grass like scaling
@@ -53,6 +81,19 @@ const GrassBlades = () => {
     //     instancedMesh.instanceMatrix.needsUpdate = true; // Notify Three.js of matrix updates
     // });
 
+    const uniforms = useMemo(
+        () => ({
+            uTime: { value: 0 },
+            uTipColor: {
+                value: new THREE.Color(controls.tipColor).convertLinearToSRGB()
+            },
+            uBaseColor: {
+                value: new THREE.Color(controls.baseColor).convertLinearToSRGB()
+            }
+        }),
+        [controls.tipColor, controls.baseColor]
+    );
+
     return (
         <group position={[0, -5, 0]}>
             <mesh
@@ -69,7 +110,9 @@ const GrassBlades = () => {
                 transform={({ position, normal, dummy: object }) => {
                     const p = position.clone().multiplyScalar(5);
                     const n = perlin.simplex3(...p.toArray());
-                    object.scale.setScalar(THREE.MathUtils.mapLinear(n, -1, 1, 0.7, 1) );
+                    object.scale.setScalar(
+                        THREE.MathUtils.mapLinear(n, -1, 1, 0.7, 1)
+                    );
                     object.position.copy(position);
                     object.rotation.y += Math.random() - 0.5 * (Math.PI * 0.5);
                     return object;
@@ -79,16 +122,14 @@ const GrassBlades = () => {
                 <instancedMesh
                     ref={instancedMeshRef}
                     receiveShadow
-                    args={[
-                        grassBlades.nodes.grassBlade.geometry,
-                        null,
-                        count
-                    ]}
+                    args={[grassBlades.nodes.grassBlade.geometry, null, count]}
                 >
                     <CustomShaderMaterial
+                        ref={matRef}
                         baseMaterial={THREE.MeshBasicMaterial}
                         fragmentShader={grassBladeFragmentShader}
                         vertexShader={grassBladeVertexShader}
+                        uniforms={uniforms}
                         side={THREE.DoubleSide}
                     />
                 </instancedMesh>
