@@ -10,7 +10,7 @@ void main() {
     vec3 color2 = uBaseColor; // Bottom color (e.g., blue)
 
     // Compute the interpolation factor with an easing function
-    float blendFactor = smoothstep(0.0, 1.0, vUv.y);
+    float blendFactor = smoothstep(-0.2, 0.8,vUv.y);
 
     // Blend the colors
     vec3 blendedColor = mix(color1, color2, blendFactor);

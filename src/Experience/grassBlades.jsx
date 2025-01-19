@@ -20,7 +20,7 @@ const GrassBlades = () => {
 
     const controls = useControls({
         tipColor: {
-            value: '#6a8000',
+            value: '#aeb700',
             label: 'Tip Color',
             onChange: (color) => {
                 matRef.current.uniforms.uTipColor.value = new THREE.Color(
@@ -29,7 +29,7 @@ const GrassBlades = () => {
             }
         },
         baseColor: {
-            value: '#021400',
+            value: '#021700',
             label: 'Base color',
             onChange: (color) => {
                 matRef.current.uniforms.uBaseColor.value = new THREE.Color(
