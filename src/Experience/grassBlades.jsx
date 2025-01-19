@@ -20,7 +20,7 @@ const GrassBlades = () => {
 
     const controls = useControls({
         tipColor: {
-            value: '#94bf02',
+            value: '#6a8000',
             label: 'Tip Color',
             onChange: (color) => {
                 matRef.current.uniforms.uTipColor.value = new THREE.Color(
@@ -29,7 +29,7 @@ const GrassBlades = () => {
             }
         },
         baseColor: {
-            value: '#072100',
+            value: '#021400',
             label: 'Base color',
             onChange: (color) => {
                 matRef.current.uniforms.uBaseColor.value = new THREE.Color(
@@ -102,7 +102,7 @@ const GrassBlades = () => {
                 castShadow
                 geometry={landGeometry} // Use non-indexed geometry
             >
-                <meshBasicMaterial color="green" side={THREE.DoubleSide} />
+                <meshBasicMaterial color="#085300" side={THREE.DoubleSide} />
             </mesh>
             <Sampler
                 // weight="density"
