@@ -37,7 +37,7 @@ const GrassBlades = () => {
                 ).convertLinearToSRGB();
             }
         },
-        density: { value: 1, min: 0, max: 4, step: 0.1 }
+        density: { value: 1, min: 0, max: 4, step: 0.001 }
     });
 
     const count = 30000 * controls.density; // Number of grass blades
