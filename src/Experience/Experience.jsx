@@ -9,7 +9,7 @@ const Experience = () => {
         <>
             <Canvas camera={{ position: [0, 2, 35] }}>
                 <Perf position={'top-left'} />
-                <CameraControls />                
+                <CameraControls />
                 <GrassBlades />
             </Canvas>
         </>
