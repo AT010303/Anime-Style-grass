@@ -66,7 +66,7 @@ void main() {
     // Output the transformed position
     // csm_Position = transform;
 
-    float frc = position.y/float(16.0);
+    float frc = position.y/float(6.0);
 
     float noise = 1.0 - (simplexNoise2d(vec2((uTime * 0.25 - offset.x/100.0), (uTime * 0.25 - offset.z/100.0))));
 
