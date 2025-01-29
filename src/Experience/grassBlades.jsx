@@ -70,12 +70,13 @@ const GrassBlades = () => {
 
     return (
         <group position={[0, -10, 0]}>
-            <mesh>
+            <mesh frustumCulled = {false}>
                 <instancedBufferGeometry
                     index={grassBlades.nodes.grassBlade.geometry.index}
                     attributes={
                         grassBlades.nodes.grassBlade.geometry.attributes
                     }
+                    
                 >
                     <instancedBufferAttribute
                         attach={'attributes-offset'}
