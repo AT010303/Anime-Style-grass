@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 
-// import getYPosition from './GetYPosition.js';
+import getYPosition from './GetYPosition.js';
 import multiplyQuaternions from './MultiplyQuarternion.js';
+
 
 const getAttributeData = (instances, width) => {
     const offesets = []; // 3 values (x, y, z) per instances of grass balde
@@ -20,8 +21,7 @@ const getAttributeData = (instances, width) => {
         //offset of each grass blade
         const offsetX = Math.random() * width - width / 2;
         const offsetZ = Math.random() * width - width / 2;
-        // const offsetY = getYPosition(offsetX, offsetZ);
-        const offsetY = 0;
+        const offsetY = getYPosition(offsetX, offsetZ);
         offesets.push(offsetX, offsetY, offsetZ);
 
         // Define random growth directions

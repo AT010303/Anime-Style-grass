@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { Sampler, useGLTF } from '@react-three/drei';
-import { useFrame, useThree } from '@react-three/fiber';
+import { useGLTF } from '@react-three/drei';
+import { useFrame } from '@react-three/fiber';
 import { useControls } from 'leva';
 import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
@@ -12,10 +12,8 @@ import getAttributeData from './utils/GetAttributeData.js';
 
 const GrassBlades = () => {
     const grassBlades = useGLTF('/grassBlade3.glb'); // Load grass blades model
-    // const land = useGLTF('/land.glb');
-    // const instancedMeshRef = useRef();
-    // const landRef = useRef();
     const matRef = useRef();
+    const landMatRef = useRef();
 
     const controls = useControls({
         tipColor: {
@@ -39,11 +37,9 @@ const GrassBlades = () => {
         density: { value: 1, min: 0, max: 4, step: 0.001 }
     });
 
-    const count = 30000 * controls.density; // Number of grass blades
+    const count = 120000 * controls.density; // Number of grass blades
 
-    const width = 100; // Width of the land
-
-    const { camera } = useThree();
+    const width = 200; // Width of the land
 
     useFrame(({ clock }) => {
         if (matRef.current) {
@@ -70,13 +66,12 @@ const GrassBlades = () => {
 
     return (
         <group position={[0, -10, 0]}>
-            <mesh frustumCulled = {false}>
+            <mesh frustumCulled={false}>
                 <instancedBufferGeometry
                     index={grassBlades.nodes.grassBlade.geometry.index}
                     attributes={
                         grassBlades.nodes.grassBlade.geometry.attributes
                     }
-                    
                 >
                     <instancedBufferAttribute
                         attach={'attributes-offset'}
@@ -113,12 +108,6 @@ const GrassBlades = () => {
                     uniforms={uniforms}
                     side={THREE.DoubleSide}
                 />
-            </mesh>
-            <mesh
-                rotation={[-Math.PI / 2, 0, 0]}
-                geometry={new THREE.PlaneGeometry(width, width)}
-            >
-                <meshBasicMaterial color="#085300" side={THREE.DoubleSide} />
             </mesh>
         </group>
     );

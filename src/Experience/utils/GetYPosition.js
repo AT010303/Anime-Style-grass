@@ -1,6 +1,11 @@
+import alea from 'alea';
 import { createNoise2D } from 'simplex-noise';
 
-const noise2D = createNoise2D();
+const prng = alea(8);
+
+const noise2D = createNoise2D(prng);
+
+
 
 const getYPosition = (x, z) => {
     let y = 2 * noise2D(x / 50, z / 50);
