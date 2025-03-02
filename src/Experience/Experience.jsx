@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { Perf } from 'r3f-perf';
 
 import GrassBlades from './grassBlades.jsx';
+import Land from './Land.jsx';
 
 const Experience = () => {
     return (
@@ -11,15 +12,16 @@ const Experience = () => {
                 <Perf position={'top-left'} />
                 <CameraControls 
                     // maxAzimuthAngle={Math.PI }
-                    maxPolarAngle={Math.PI / 2}
+                    // maxPolarAngle={Math.PI / 2}
                     // minAzimuthAngle={-Math.PI}
-                    minPolarAngle={Math.PI / 2.3}
-                    truck={false}
-                    maxDistance={100}
-                    minDistance={60}
+                    // minPolarAngle={Math.PI / 2.3}
+                    // truck={false}
+                    // maxDistance={100}
+                    // minDistance={60}
 
                 />
                 <GrassBlades />
+                <Land />
             </Canvas>
         </>
     );
