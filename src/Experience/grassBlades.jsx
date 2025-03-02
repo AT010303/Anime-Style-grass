@@ -37,7 +37,7 @@ const GrassBlades = () => {
         density: { value: 1, min: 0, max: 4, step: 0.001 }
     });
 
-    const count = 120000 * controls.density; // Number of grass blades
+    const count = 60000 * controls.density; // Number of grass blades
 
     const width = 200; // Width of the land
 
