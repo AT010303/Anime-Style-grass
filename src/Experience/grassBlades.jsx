@@ -11,7 +11,7 @@ import grassBladeVertexShader from './shader/grassBlade/vertex.glsl';
 import getAttributeData from './utils/GetAttributeData.js';
 
 const GrassBlades = () => {
-    const grassBlades = useGLTF('/grassBlade3.glb'); // Load grass blades model
+    const grassBlades = useGLTF('/grassBladeLOD.glb'); // Load grass blades model
     const matRef = useRef();
     const landMatRef = useRef();
 
@@ -68,9 +68,9 @@ const GrassBlades = () => {
         <group position={[0, -10, 0]}>
             <mesh frustumCulled={false}>
                 <instancedBufferGeometry
-                    index={grassBlades.nodes.grassBlade.geometry.index}
+                    index={grassBlades.nodes.grassBladeH.geometry.index}
                     attributes={
-                        grassBlades.nodes.grassBlade.geometry.attributes
+                        grassBlades.nodes.grassBladeH.geometry.attributes
                     }
                 >
                     <instancedBufferAttribute

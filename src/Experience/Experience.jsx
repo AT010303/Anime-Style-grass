@@ -8,7 +8,7 @@ import Land from './Land.jsx';
 const Experience = () => {
     return (
         <>
-            <Canvas camera={{ position: [0, 15, 65], fov: 50 }}>
+            <Canvas camera={{ position: [0, 15, 65], fov: 50 }} gl={{ antialias: true,  powerPreference: 'high-performance', pixelRatio: [1,2] }}>
                 <Perf position={'top-left'} />
                 <CameraControls
                 // maxAzimuthAngle={Math.PI }

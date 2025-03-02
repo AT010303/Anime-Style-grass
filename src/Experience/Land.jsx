@@ -10,7 +10,7 @@ const Land = () => {
     const width = 200; // Width of the land
 
     const groundGeo = useMemo(() => {
-        const geo = new THREE.PlaneGeometry(width, width, 32, 32);
+        const geo = new THREE.PlaneGeometry(width, width, 200, 200);
         geo.rotateX(-Math.PI / 2);
 
         const position = geo.attributes.position.array;
@@ -35,7 +35,7 @@ const Land = () => {
                     vertexShader={LandVertexShader}
                     uniforms={{}}
                     color={'#00591c'}
-                    side={THREE.DoubleSide}
+                    // side={THREE.DoubleSide}
                 />
             </mesh>
         </>
