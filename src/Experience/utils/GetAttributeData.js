@@ -3,7 +3,6 @@ import * as THREE from 'three';
 import getYPosition from './GetYPosition.js';
 import multiplyQuaternions from './MultiplyQuarternion.js';
 
-
 const getAttributeData = (instances, width) => {
     const offesets = []; // 3 values (x, y, z) per instances of grass balde
     const orientations = []; // 4 values per quartanion for each grass blade

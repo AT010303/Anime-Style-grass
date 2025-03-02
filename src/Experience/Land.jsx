@@ -7,7 +7,6 @@ import LandVertexShader from './shader/land/vertex.glsl';
 import getYPosition from './utils/GetYPosition.js';
 
 const Land = () => {
-
     const width = 200; // Width of the land
 
     const groundGeo = useMemo(() => {
@@ -15,17 +14,16 @@ const Land = () => {
         geo.rotateX(-Math.PI / 2);
 
         const position = geo.attributes.position.array;
-        for (let i=0; i< position.length; i+=3) {
+        for (let i = 0; i < position.length; i += 3) {
             const x = position[i];
-            const z = position[i+2];
-            position[i + 1] =  getYPosition(x, z);
+            const z = position[i + 2];
+            position[i + 1] = getYPosition(x, z);
         }
 
         geo.computeVertexNormals();
         geo.attributes.position.needsUpdate = true;
 
         return geo;
-        
     }, [width]);
 
     return (
