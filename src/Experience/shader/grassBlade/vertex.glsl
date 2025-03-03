@@ -1,4 +1,4 @@
-precision mediump float;
+// precision highp float;
 attribute vec3 offset;
 attribute vec4 orientation;
 attribute float halfRootAngleSin;
@@ -56,16 +56,6 @@ vec4 slerp(vec4 v0, vec4 v1, float t) {
 
 void main() {
 
-    // Grass bending effect
-    // vec3 transform = position;
-    // Apply a sine wave to bend the grass, with more curve at the top
-    // float curveStrength = simplexNoise2d(vec2( sin(uTime *2.0)*0.05, cos(uTime * 1.0) * 0.05)) ; // Control the maximum bending
-    // float heightFactor = position.y * 0.075; // Scales the bending effect (stronger at top, weaker at bottom)
-    // transform.x += (position.y * 0.25) * curveStrength * heightFactor ;
-    // transform.z += (position.y * 0.15) * curveStrength * heightFactor ;
-    // Output the transformed position
-    // csm_Position = transform;
-
     float frc = position.y/float(6.0);
 
     float noise = 1.0 - (simplexNoise2d(vec2((uTime * 0.25 - offset.x/100.0), (uTime * 0.25 - offset.z/100.0))));
@@ -77,11 +67,11 @@ void main() {
     vec3 vPosition = vec3(position.x, position.y + position.y * stretch, position.z);
     vPosition = rotateVectorByQuaternion(vPosition, direction);
 
-    float halfAngle = noise * 0.1;
+    float halfAngle = noise * 0.15;
 
     vPosition = rotateVectorByQuaternion(vPosition, normalize(vec4(sin(halfAngle), 0.0, -sin(halfAngle), cos(halfAngle))));
 
-    csm_Position = offset + vPosition;
+    csm_Position = (offset  + vPosition * 1.5) ;
 
     vUv = uv;
 }

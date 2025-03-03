@@ -6,8 +6,8 @@ uniform vec3 uBaseColor;
 
 void main() {
 
-    vec3 color1 = uTipColor; // Top color (e.g., red)
-    vec3 color2 = uBaseColor; // Bottom color (e.g., blue)
+    vec3 color1 = uTipColor; 
+    vec3 color2 = uBaseColor;
 
     // Compute the interpolation factor with an easing function
     float blendFactor = smoothstep(-0.2, 0.8,vUv.y);
